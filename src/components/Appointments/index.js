@@ -25,32 +25,21 @@ class Appointments extends Component {
     }))
   }
 
-  onFilter = () => {
+  onClickFilter = () => {
     const {isFilterActive} = this.state
-
     this.setState({
       isFilterActive: !isFilterActive,
-    })
-  }
-
-  onChangeDateInput = event => {
-    this.setState({
-      dateInput: event.target.value,
-    })
-  }
-
-  onChangeTitleInput = event => {
-    this.setState({
-      titleInput: event.target.value,
     })
   }
 
   onAddAppointment = event => {
     event.preventDefault()
     const {titleInput, dateInput} = this.state
+
     const formattedDate = dateInput
-      ? format(new Date(dateInput), 'dd MMM YYYY, EEEE')
+      ? format(new Date(dateInput), 'dd MMM yyyy, EEEE')
       : ''
+
     const newAppointment = {
       id: v4(),
       title: titleInput,
@@ -63,6 +52,14 @@ class Appointments extends Component {
       titleInput: '',
       dateInput: '',
     }))
+  }
+
+  onChangeDateInput = event => {
+    this.setState({dateInput: event.target.value})
+  }
+
+  onChangeTitleInput = event => {
+    this.setState({titleInput: event.target.value})
   }
 
   getFilteredAppointmentsList = () => {
@@ -94,10 +91,11 @@ class Appointments extends Component {
                 <input
                   type="text"
                   id="title"
-                  className="input"
-                  placeholder="Title"
                   value={titleInput}
+                  className="input"
                   onChange={this.onChangeTitleInput}
+                  placeholder="Title"
+                  autoComplete="OFF"
                 />
                 <label htmlFor="date" className="label">
                   DATE
@@ -115,7 +113,7 @@ class Appointments extends Component {
               </form>
               <img
                 src="https://assets.ccbp.in/frontend/react-js/apointments-app/appointments-img.png"
-                className="appointments-img"
+                className="appointments-image"
                 alt="appointments"
               />
             </div>
@@ -125,7 +123,7 @@ class Appointments extends Component {
               <button
                 type="button"
                 className={`filter-style ${filterClassName}`}
-                onClick={this.onFilter}
+                onClick={this.onClickFilter}
               >
                 Starred
               </button>
